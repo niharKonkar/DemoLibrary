@@ -1,0 +1,6 @@
+{
+    "androidversion":{
+        "minVersion":9,
+        "maxVersion":12
+    }
+}
