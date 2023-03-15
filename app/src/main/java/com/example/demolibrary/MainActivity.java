@@ -48,11 +48,11 @@ public class MainActivity extends AppCompatActivity {
                      n1 = String.valueOf(data.getString("name1"));
                      n2 = String.valueOf(data.getString("name2"));
                      n3 = String.valueOf(data.getString("name3"));
-                     if (n1.equals(Util.getDeviceName()))
+                     if (n1.equals(DemoClass.getDeviceName()))
                          DemoClass.Toaster(getApplicationContext(), "Valide Devicename"+n1);
-                     else if (n2.equals(Util.getDeviceName()))
+                     else if (n2.equals(DemoClass.getDeviceName()))
                          DemoClass.Toaster(getApplicationContext(),"Valide Devicename"+n2);
-                     else if (n3.equals(Util.getDeviceName()))
+                     else if (n3.equals(DemoClass.getDeviceName()))
                          DemoClass.Toaster(getApplicationContext(),"Valide Devicename"+n3);
                      else
                          DemoClass.Toaster(getApplicationContext(),"Incorrect Devicename");
