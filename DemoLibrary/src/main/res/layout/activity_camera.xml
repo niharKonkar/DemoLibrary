@@ -8,26 +8,83 @@
 
     <Button
         android:id="@+id/selectbtn"
-        android:layout_width="230dp"
-        android:layout_height="52dp"
+        android:layout_width="160dp"
+        android:layout_height="75dp"
         android:backgroundTint="#00BCD4"
         android:text="Select Menu"
+        android:textColor="@color/design_default_color_on_secondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.882"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.733" />
+        app:layout_constraintVertical_bias="0.246" />
+
+    <Button
+        android:id="@+id/osbtn"
+        android:layout_width="155dp"
+        android:layout_height="70dp"
+        android:backgroundTint="#00BCD4"
+        android:text="Is os Valid"
+        android:textColor="@color/design_default_color_on_secondary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.072"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.561" />
+
+    <Button
+        android:id="@+id/dvnbtn"
+        android:layout_width="155dp"
+        android:layout_height="70dp"
+        android:backgroundTint="#00BCD4"
+        android:text="Devicename Valid"
+        android:textColor="@color/design_default_color_on_secondary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.886"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.561" />
+
+    <Button
+        android:id="@+id/brinessbtn"
+        android:layout_width="155dp"
+        android:layout_height="70dp"
+        android:backgroundTint="#00BCD4"
+        android:text="Check Brightness"
+        android:textColor="@color/design_default_color_on_secondary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.076"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.741" />
+
+    <Button
+        android:id="@+id/resobtn"
+        android:layout_width="155dp"
+        android:layout_height="70dp"
+        android:backgroundTint="#00BCD4"
+        android:text="Get Resolution"
+        android:textColor="@color/design_default_color_on_secondary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.886"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.741" />
 
     <ImageView
         android:id="@+id/capimgv"
-        android:layout_width="326dp"
-        android:layout_height="318dp"
+        android:layout_width="150dp"
+        android:layout_height="157dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.121"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.23"
+        app:layout_constraintVertical_bias="0.189"
         app:srcCompat="@android:drawable/divider_horizontal_dark" />
 </androidx.constraintlayout.widget.ConstraintLayout>

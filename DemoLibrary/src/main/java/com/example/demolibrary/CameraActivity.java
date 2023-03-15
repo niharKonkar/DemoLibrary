@@ -14,6 +14,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.ContextMenu;
@@ -24,13 +25,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.lang.reflect.Field;
 
 public class CameraActivity extends AppCompatActivity {
     public static final int CAMERA_PERM_CODE = 101;
     public static final int CAMERA_REQUEST_CODE = 102;
     public static final int GALLERY_REQUEST_CODE = 100;
-    Button selectmenubtn;
+    Button selectmenubtn,isOsValidbtn,devicenameValidbtn,checkbrightnessbtn,getresolutionbtn;
     ImageView imgv;
     AlertDialog.Builder builder;
 
@@ -42,7 +47,17 @@ public class CameraActivity extends AppCompatActivity {
 
         builder = new AlertDialog.Builder(this);
         imgv = (ImageView) findViewById(R.id.capimgv);
+
+        isOsValidbtn = (Button) findViewById(R.id.osbtn);
+        devicenameValidbtn = (Button) findViewById(R.id.dvnbtn);
+        checkbrightnessbtn = (Button) findViewById(R.id.brinessbtn);
+        getresolutionbtn = (Button) findViewById(R.id.resobtn);
         selectmenubtn = (Button)  findViewById(R.id.selectbtn);
+
+        String myVersion = Build.VERSION.RELEASE;
+
+        int os = Build.VERSION.SDK_INT;
+
         selectmenubtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +76,55 @@ public class CameraActivity extends AppCompatActivity {
                             }
                         })
                         .show();
+            }
+        });
+
+        devicenameValidbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    JSONObject data = DemoClass.Readfile(getApplicationContext());
+                    String n1,n2,n3;
+                    n1 = String.valueOf(data.getString("name1"));
+                    n2 = String.valueOf(data.getString("name2"));
+                    n3 = String.valueOf(data.getString("name3"));
+                    if (n1.equals(DemoClass.getDeviceName()) || n2.equals(DemoClass.getDeviceName())
+                            || n3.equals(DemoClass.getDeviceName())){
+                        DemoClass.Toaster(getApplicationContext(),"Devicename:"
+                                +DemoClass.getDeviceName());
+                    }
+                    else
+                        DemoClass.Toaster(getApplicationContext(),"Incorrect Devicename");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        isOsValidbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    JSONObject data = DemoClass.Read(getApplicationContext());
+                    String min , max;
+                    min = String.valueOf(data.getInt("minVersion"));
+                    max = String.valueOf(data.getInt("maxVersion"));
+                    if (min.equals(myVersion) || max.equals(myVersion)){
+                        StringBuilder builder = new StringBuilder();
+                        builder.append("android- ").append(Build.VERSION.RELEASE);
+                        DemoClass.Toaster(getApplicationContext(),"OS: "+builder.toString());
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+//                StringBuilder builder = new StringBuilder();
+//                builder.append("android- ").append(Build.VERSION.RELEASE);
+//                DemoClass.Toaster(getApplicationContext(),"OS: "+builder.toString());
             }
         });
     }
@@ -110,10 +174,6 @@ public class CameraActivity extends AppCompatActivity {
             Toast.makeText(this, "Brightness value:-"+calculateBrightnessEstimate(image,1), Toast.LENGTH_LONG).show();
         }
         else if (requestCode == GALLERY_REQUEST_CODE){
-//            Bitmap image1 = (Bitmap) data.getExtras().get("data");
-//            imgv.setImageBitmap(image1);
-//                imgv.setImageURI(data.getData());
-//            Toast.makeText(this, "Brightness value:-"+calculateBrightnessEstimate(image1,1), Toast.LENGTH_LONG).show();
             Uri uri = data.getData();
             imgv.setImageURI(uri);
             try {
@@ -142,21 +202,4 @@ public class CameraActivity extends AppCompatActivity {
         }
         return (R + B + G) / (n * 3);
     }
-
-//    public int calculateBrightnessEstimate(Uri uri, int pixelSpacing) {
-//        int R = 0; int G = 0; int B = 0;
-//        int height = uri.getHeight();
-//        int width = uri.getWidth();
-//        int n = 0;
-//        int[] pixels = new int[width * height];
-//        uri.getPixels(pixels, 0, width, 0, 0, width, height);
-//        for (int i = 0; i < pixels.length; i += pixelSpacing) {
-//            int color = pixels[i];
-//            R += Color.red(color);
-//            G += Color.green(color);
-//            B += Color.blue(color);
-//            n++;
-//        }
-//        return (R + B + G) / (n * 3);
-//    }
 }

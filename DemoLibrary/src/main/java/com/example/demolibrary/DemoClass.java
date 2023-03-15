@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.widget.Toast;
@@ -55,6 +56,29 @@ public class DemoClass {
         return data;
     }
 
+    public static JSONObject Read(Context context) throws IOException {
+        AssetManager manager = context.getAssets();
+        InputStream inputStream = manager.open("jsonfile");
+        Scanner scanner = new Scanner(inputStream);
+        StringBuilder builder = new StringBuilder();
+        while (scanner.hasNextLine()) {
+            builder.append(scanner.nextLine());
+        }
+        return json(builder.toString());
+    }
+
+    private static JSONObject json(String toString) {
+        StringBuilder builder = new StringBuilder();
+        JSONObject data = null;
+        try {
+            JSONObject object = new JSONObject(toString);
+            data = object.getJSONObject("androidversion");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
+
     public static String getDeviceName() {
         String manufacturer = Build.MANUFACTURER;
         String model = Build.MODEL;
@@ -76,4 +100,20 @@ public class DemoClass {
         }
     }
 
+    public int calculateBrightnessEstimate(android.graphics.Bitmap bitmap, int pixelSpacing) {
+        int R = 0; int G = 0; int B = 0;
+        int height = bitmap.getHeight();
+        int width = bitmap.getWidth();
+        int n = 0;
+        int[] pixels = new int[width * height];
+        bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
+        for (int i = 0; i < pixels.length; i += pixelSpacing) {
+            int color = pixels[i];
+            R += Color.red(color);
+            G += Color.green(color);
+            B += Color.blue(color);
+            n++;
+        }
+        return (R + B + G) / (n * 3);
+    }
 }
