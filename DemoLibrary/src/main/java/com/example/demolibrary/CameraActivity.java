@@ -112,10 +112,12 @@ public class CameraActivity extends AppCompatActivity {
                     min = String.valueOf(data.getInt("minVersion"));
                     max = String.valueOf(data.getInt("maxVersion"));
                     if (min.equals(myVersion) || max.equals(myVersion)){
-                        StringBuilder builder = new StringBuilder();
-                        builder.append("android- ").append(Build.VERSION.RELEASE);
-                        DemoClass.Toaster(getApplicationContext(),"OS: "+builder.toString());
+//                        StringBuilder builder = new StringBuilder();
+//                        builder.append("android- ").append(Build.VERSION.RELEASE);
+                        DemoClass.Toaster(getApplicationContext(),"OS: "+myVersion);
                     }
+                    else
+                        DemoClass.Toaster(getApplicationContext(),"invalide Version");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
