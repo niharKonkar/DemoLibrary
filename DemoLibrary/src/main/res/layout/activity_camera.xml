@@ -11,7 +11,7 @@
         android:layout_width="160dp"
         android:layout_height="75dp"
         android:backgroundTint="#00BCD4"
-        android:text="Select Menu"
+        android:text="Select Image"
         android:textColor="@color/design_default_color_on_secondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
