@@ -100,7 +100,7 @@ public class DemoClass {
         }
     }
 
-    public int calculateBrightnessEstimate(android.graphics.Bitmap bitmap, int pixelSpacing) {
+    public static int calculateBrightnessEstimate(android.graphics.Bitmap bitmap, int pixelSpacing) {
         int R = 0; int G = 0; int B = 0;
         int height = bitmap.getHeight();
         int width = bitmap.getWidth();

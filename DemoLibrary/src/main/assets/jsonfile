@@ -1,6 +1,6 @@
 {
     "androidversion":{
         "minVersion":9,
-        "maxVersion":13
+        "maxVersion":12
     }
 }

@@ -1,5 +1,7 @@
 package com.example.demolibrary;
 
+import static com.example.demolibrary.DemoClass.calculateBrightnessEstimate;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,6 +40,7 @@ public class CameraActivity extends AppCompatActivity {
     Button selectmenubtn,isOsValidbtn,devicenameValidbtn,checkbrightnessbtn,getresolutionbtn;
     ImageView imgv;
     AlertDialog.Builder builder;
+    Bitmap imgbitmap;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -55,8 +58,6 @@ public class CameraActivity extends AppCompatActivity {
         selectmenubtn = (Button)  findViewById(R.id.selectbtn);
 
         String myVersion = Build.VERSION.RELEASE;
-
-        int os = Build.VERSION.SDK_INT;
 
         selectmenubtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,9 +113,7 @@ public class CameraActivity extends AppCompatActivity {
                     min = String.valueOf(data.getInt("minVersion"));
                     max = String.valueOf(data.getInt("maxVersion"));
                     if (min.equals(myVersion) || max.equals(myVersion)){
-//                        StringBuilder builder = new StringBuilder();
-//                        builder.append("android- ").append(Build.VERSION.RELEASE);
-                        DemoClass.Toaster(getApplicationContext(),"OS: "+myVersion);
+                        DemoClass.Toaster(getApplicationContext(),"OS : android: "+myVersion);
                     }
                     else
                         DemoClass.Toaster(getApplicationContext(),"invalide Version");
@@ -123,10 +122,33 @@ public class CameraActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+        });
 
-//                StringBuilder builder = new StringBuilder();
-//                builder.append("android- ").append(Build.VERSION.RELEASE);
-//                DemoClass.Toaster(getApplicationContext(),"OS: "+builder.toString());
+        checkbrightnessbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (imgbitmap != null){
+                    DemoClass.Toaster(getApplicationContext(),
+                            "Brightness value:- "+calculateBrightnessEstimate(imgbitmap,1));
+                }
+                else
+                    DemoClass.Toaster(getApplicationContext(),"Please upload image first");
+            }
+        });
+
+        getresolutionbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (imgbitmap != null){
+                    int height = imgbitmap.getHeight();
+                    int width = imgbitmap.getWidth();
+                    DemoClass.Toaster(getApplicationContext(),
+                            "Height of an image:- "+height+"                        "
+                                    +"Width of an image:-"+width);
+                }
+                else
+                    DemoClass.Toaster(getApplicationContext(),"Please upload image first");
             }
         });
     }
@@ -169,39 +191,19 @@ public class CameraActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 //        super.onActivityResult(requestCode, resultCode, data);
-//        Bitmap image = null;
         if (requestCode == CAMERA_REQUEST_CODE){
-                Bitmap image = (Bitmap) data.getExtras().get("data");
-                imgv.setImageBitmap(image);
-            Toast.makeText(this, "Brightness value:-"+calculateBrightnessEstimate(image,1), Toast.LENGTH_LONG).show();
+                imgbitmap = (Bitmap) data.getExtras().get("data");
+                imgv.setImageBitmap(imgbitmap);
         }
         else if (requestCode == GALLERY_REQUEST_CODE){
             Uri uri = data.getData();
             imgv.setImageURI(uri);
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-                Toast.makeText(this, "Brightness value:-"+calculateBrightnessEstimate(bitmap,1), Toast.LENGTH_LONG).show();
+                imgbitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
         }
-    }
-
-    public int calculateBrightnessEstimate(android.graphics.Bitmap bitmap, int pixelSpacing) {
-        int R = 0; int G = 0; int B = 0;
-        int height = bitmap.getHeight();
-        int width = bitmap.getWidth();
-        int n = 0;
-        int[] pixels = new int[width * height];
-        bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
-        for (int i = 0; i < pixels.length; i += pixelSpacing) {
-            int color = pixels[i];
-            R += Color.red(color);
-            G += Color.green(color);
-            B += Color.blue(color);
-            n++;
-        }
-        return (R + B + G) / (n * 3);
     }
 }
